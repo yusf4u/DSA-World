@@ -2,14 +2,16 @@ import tkinter as tk
 from tkinter import font
 from PIL import Image, ImageTk
 
-# Load and resize background image
-bg_image = Image.open("assets/backgrounds/main_menu_bg.png")
-bg_image = bg_image.resize((w, h), Image.LANCZOS)
-bg_photo = ImageTk.PhotoImage(bg_image)
+def show_home(root, width, height):
+    # Load and resize background image
+    bg_image = Image.open("assets/backgrounds/main_menu_bg.png")
+    bg_image = bg_image.resize((width, height), Image.LANCZOS)
+    bg_photo = ImageTk.PhotoImage(bg_image)
 
-# Create background label
-bg_label = tk.Label(root, image=bg_photo)
-bg_label.place(x=0, y=0, relwidth=1, relheight=1)
+    # Create background label
+    bg_label = tk.Label(root, image=bg_photo)
+    bg_label.image = bg_photo  # Keep a reference
+    bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
 
 # Button callbacks

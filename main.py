@@ -1,4 +1,3 @@
-
 from tkinter import Tk
 from screens import home
 

@@ -1,21 +1,25 @@
 import tkinter as tk
-from tkinter import font
 from PIL import Image, ImageTk
 
 def show_home(root, width, height):
-    # Load and resize background image
-    bg_image = Image.open("assets/backgrounds/main_menu_bg.png")
+    from screens.menu_page import show_menu  # Lazy import
+
+    # Clear previous widgets
+    for widget in root.winfo_children():
+        widget.destroy()
+
+    # Load and display background
+    bg_image = Image.open("assets/backgrounds/bg.png")
     bg_image = bg_image.resize((width, height), Image.LANCZOS)
     bg_photo = ImageTk.PhotoImage(bg_image)
 
-    # Create background label
     bg_label = tk.Label(root, image=bg_photo)
-    bg_label.image = bg_photo  # Keep a reference
+    bg_label.image = bg_photo
     bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
-    # Button callbacks
+    # Button actions
     def start_game():
-        print("Start pressed - go to level selection")
+        show_menu(root, width, height)
 
     def show_about():
         about_window = tk.Toplevel(root)
@@ -28,7 +32,7 @@ def show_home(root, width, height):
     def exit_game():
         root.destroy()
 
-    # Buttons with semi-transparent background
+    # Button styling
     btn_style = {
         "font": ("Courier", 20, "bold"),
         "width": 15,
@@ -36,30 +40,11 @@ def show_home(root, width, height):
         "relief": "raised",
         "bd": 3
     }
-    posx = 0.46
-    posy = 0.55
-    diff = 0.1
 
-    # Center coordinates for buttons
-    start_btn = tk.Button(root,
-                          text="Start",
-                          bg="#32CD32",
-                          command=start_game,
-                          **btn_style)
-    start_btn.place(relx=posx, rely=posy, anchor="center")
+    # Adjusted button positions (more central in the image's empty space)
+    base_y = 0.55
+    spacing = 0.12  # more spacing to match visual aesthetics
 
-    about_btn = tk.Button(root,
-                          text="About",
-                          bg="#FFA500",
-                          command=show_about,
-                          **btn_style)
-    about_btn.place(relx=posx, rely=posy + diff, anchor="center")
-
-    exit_btn = tk.Button(root,
-                         text="Exit",
-                         bg="#FF4500",
-                         command=exit_game,
-                         **btn_style)
-    exit_btn.place(relx=posx, rely=posy + diff * 2, anchor="center")
-
-  
+    tk.Button(root, text="Start", bg="#32CD32", command=start_game, **btn_style).place(relx=0.5, rely=base_y, anchor="center")
+    tk.Button(root, text="About", bg="#FFA500", command=show_about, **btn_style).place(relx=0.5, rely=base_y + spacing, anchor="center")
+    tk.Button(root, text="Exit", bg="#FF4500", command=exit_game, **btn_style).place(relx=0.5, rely=base_y + spacing * 2, anchor="center")

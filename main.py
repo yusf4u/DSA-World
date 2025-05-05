@@ -10,5 +10,3 @@ root.resizable(False, False)
 
 home.show_home(root, w, h)
 root.mainloop()
-
-
